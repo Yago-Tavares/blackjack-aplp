@@ -6,9 +6,22 @@ baralho = zip ["As de copas", "As de espadas", "As de ouro", "As de paus", "Dois
 
 tamanhoBaralho = length baralho
 
+valorRandom = unsafePerformIO (getStdRandom (randomR (0, tamanhoBaralho -1)))
+
 baralhoHumano = zip [][]
 
 baralhoMaquina = zip [][]
+
+{- Este método só aceita como resposta o valor 7 para adicionar 
+uma carta no baralho qualquer outro valor ele entra no 'x'
+para adicionar uma carta use:
+
+baralhoHumano = adicionarCartaBaralho 7
+
+-}
+adicionarCartaBaralho :: (Integral humano) => humano -> [(String,Int)]  
+adicionarCartaBaralho 7 = [baralho!!valorRandom]  
+adicionarCartaBaralho x = [("casoDeErroParaTeste",0)]   
 
 main = do  
     putStrLn "Bem vindo ao jogo 21!!! Digite seu nome:"  
@@ -17,7 +30,7 @@ main = do
 
 {- Comentário  em Haskell
 
-baralho !! 0 (pega a posição 0 da tuplha baralho) ["As de copas, 1]
+baralho !! 0 (pega a posição 0 da tuplha baralho) ["As de copas", 1]
 
 Acessando os valores das tuplas
 
