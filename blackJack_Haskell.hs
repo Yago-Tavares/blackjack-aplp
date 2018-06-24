@@ -6,3 +6,20 @@ baralho = zip ["As de copas", "As de espadas", "As de ouro", "As de paus", "Dois
 
 
 main = replicateM 10 (randomIO :: IO Float) >>= print
+
+{- Comentário  em Haskell
+
+baralho !! 0 (pega a posição 0 da tuplha baralho) ["As de copas, 1]
+
+Acessando os valores das tuplas
+
+fst (baralho !! 0) - vai retornar o "As de copas" -
+snd (baralho !! 0) - vai retornar o 1 -
+
+valorRandom = unsafePerformIO (getStdRandom (randomR (0, 51))) - Gera um valor aleatório no range 1~51 de inteiros
+
+Assim podemos pegar uma carta aleatória no baralho:
+
+baralho !! valorRandom
+
+-}
