@@ -6,7 +6,8 @@ baralho = zip ["As de copas", "As de espadas", "As de ouro", "As de paus", "Dois
 
 tamanhoBaralho = length baralho
 
-valorRandom = unsafePerformIO (getStdRandom (randomR (0, tamanhoBaralho -1)))
+--retorna um valor do tipo IO Int que é diferente de Int e não posso usar ele no método adicionarCartaBaralho
+valor = randomRIO (0, tamanhoBaralho)
 
 baralhoHumano = zip [][]
 
@@ -19,9 +20,10 @@ para adicionar uma carta use:
 baralhoHumano = adicionarCartaBaralho 7
 
 -}
-adicionarCartaBaralho :: (Integral humano) => humano -> [(String,Int)]  
-adicionarCartaBaralho 7 = [baralho!!valorRandom]  
-adicionarCartaBaralho x = [("casoDeErroParaTeste",0)]   
+adicionarCartaBaralho :: (Integral humano) => humano -> ([Char],Int)   
+adicionarCartaBaralho 7 = baralho!!1 --devia usar valor aqui, mas o tipo é diferente  
+adicionarCartaBaralho x = ("casoDeErroParaTeste",0)  
+
 
 main = do  
     putStrLn "Bem vindo ao jogo 21!!! Digite seu nome:"  
