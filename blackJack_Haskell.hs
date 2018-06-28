@@ -35,12 +35,75 @@ escolherDificuldade = do
 --Iniciar partida puxando as cartas
 iniciarPartida :: IO()
 iniciarPartida = do
-   carta1 <- randomRIO(0 :: Int, 51 :: Int)
-   carta2 <- randomRIO(1 :: Int, 51 :: Int)
-   carta3 <- randomRIO(1 :: Int, 51 :: Int)
-   let cartas = [baralho !! carta1, baralho !! carta2, baralho !! carta3]
-   let novoBaralho = baralhoHumano ++ cartas
-   print novoBaralho
+
+-- Pega cartas do humano
+   
+   --pega primeira carta
+   indice1 <- randomRIO(0 :: Int, 51 :: Int)
+   let carta1 = baralho !! indice1
+   --remove a carta do baralho
+   let primeiraParte = take indice1 baralho
+   let proximaCarta = indice1 + 1
+   let segundaParte = drop proximaCarta baralho
+   let novoBaralho = primeiraParte ++ segundaParte
+   
+   --pega segunda carta
+   indice2 <- randomRIO(0 :: Int, 50 :: Int)
+   let carta2 = novoBaralho !! indice2
+   --remove a carta do baralho
+   let primeiraParte = take indice2 novoBaralho
+   let proximaCarta = indice2 + 1
+   let segundaParte = drop proximaCarta novoBaralho
+   let novoBaralho = primeiraParte ++ segundaParte
+
+   --pega terceira carta
+   indice3 <- randomRIO(0 :: Int, 49 :: Int)
+   let carta3 = novoBaralho !! indice3
+   --remove a carta do baralho
+   let primeiraParte = take indice3 novoBaralho
+   let proximaCarta = indice3 + 1
+   let segundaParte = drop proximaCarta novoBaralho
+   let novoBaralho = primeiraParte ++ segundaParte
+
+   let cartas = [carta1, carta2, carta3]
+   let novoBaralhoHumano = baralhoHumano ++ cartas
+   putStrLn "Baralho Humano: "
+   print novoBaralhoHumano
+
+------------------------------------------------------
+-- Pega cartas da maquina
+
+   --pega primeira carta
+   indice1 <- randomRIO(0 :: Int, 48 :: Int)
+   let carta1 = novoBaralho !! indice1
+   --remove a carta do baralho
+   let primeiraParte = take indice1 baralho
+   let proximaCarta = indice1 + 1
+   let segundaParte = drop proximaCarta baralho
+   let novoBaralho = primeiraParte ++ segundaParte
+   
+   --pega segunda carta
+   indice2 <- randomRIO(0 :: Int, 47 :: Int)
+   let carta2 = novoBaralho !! indice2
+   --remove a carta do baralho
+   let primeiraParte = take indice2 novoBaralho
+   let proximaCarta = indice2 + 1
+   let segundaParte = drop proximaCarta novoBaralho
+   let novoBaralho = primeiraParte ++ segundaParte
+
+   --pega terceira carta
+   indice3 <- randomRIO(0 :: Int, 46 :: Int)
+   let carta3 = novoBaralho !! indice3
+   --remove a carta do baralho
+   let primeiraParte = take indice3 novoBaralho
+   let proximaCarta = indice3 + 1
+   let segundaParte = drop proximaCarta novoBaralho
+   let novoBaralho = primeiraParte ++ segundaParte
+
+   let cartas = [carta1, carta2, carta3]
+   let novoBaralhoMaquina = baralhoMaquina ++ cartas
+   putStrLn "Baralho Maquina: "
+   print novoBaralhoMaquina
    
 
 
