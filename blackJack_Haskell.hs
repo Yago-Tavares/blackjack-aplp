@@ -118,4 +118,15 @@ iniciarPartida = do
    let novoBaralhoMaquina = baralhoMaquina ++ cartas
    putStrLn "Baralho Maquina: "
    putStrLn((show novoBaralhoMaquina) ++ " Pontuação: " ++ (show pontuacaoMaquina3))
+   vencedorPartida pontuacaoHumano3 pontuacaoMaquina3
    
+-- Exibe o vencedor baseado nos pontos feitos pelos jogadores   
+vencedorPartida pontuacaoHumano pontuacaoMaquina = do
+	putStrLn "\n----------- Resultado ----------------"
+	if ((pontuacaoHumano > pontuacaoMaquina) && (pontuacaoHumano <= 21)) then putStrLn ("Jogador humano é o vencedor: " ++ (show pontuacaoHumano) ++ " pontos" ++ "\nPontuação máquina: " ++ show(pontuacaoMaquina))
+	else if ((pontuacaoMaquina > pontuacaoHumano) && (pontuacaoMaquina <= 21)) then putStrLn ("Jogador maquina é o vencedor: " ++ (show pontuacaoMaquina) ++ " pontos" ++ "\nPontuação humano: " ++ show(pontuacaoHumano))
+	else if (pontuacaoHumano == pontuacaoMaquina) then putStrLn ("Deu empate\n Jogador humano: " ++ (show pontuacaoHumano) ++ "\n Jogador maquina: " ++ show(pontuacaoMaquina))
+	else if (pontuacaoHumano > 21 && pontuacaoMaquina <= 21) then putStrLn ("Jogador maquina é o vencedor: " ++ (show pontuacaoMaquina) ++ " pontos" ++ "\nPontuação humano: " ++ show(pontuacaoHumano))
+	else if (pontuacaoMaquina > 21 && pontuacaoHumano <= 21) then putStrLn ("Jogador humano é o vencedor: " ++ (show pontuacaoHumano) ++ " pontos" ++ "\nPontuação máquina: " ++ show(pontuacaoMaquina))
+	--Eu acho que aqui podemos reinvocar o inicarPartida e rodar um novo jogo quando der empate de pontos
+	else putStrLn ("Não houve ganhadores, ambos jogadores marcaram acima de 21 pontos! \nPontuação humano: " ++ (show pontuacaoHumano) ++ "\nPontuação máquina: " ++ (show pontuacaoMaquina))
