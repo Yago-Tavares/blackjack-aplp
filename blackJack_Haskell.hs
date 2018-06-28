@@ -60,21 +60,10 @@ iniciarPartida = do
    let segundaParte = drop proximaCarta novoBaralho
    let novoBaralho = primeiraParte ++ segundaParte
 
-   --pega terceira carta
-   indice3 <- randomRIO(0 :: Int, 49 :: Int)
-   let carta3 = novoBaralho !! indice3
-   let pontuacaoHumano3 = pontuacaoHumano2 + snd (carta3)
-
-   --remove a carta do baralho
-   let primeiraParte = take indice3 novoBaralho
-   let proximaCarta = indice3 + 1
-   let segundaParte = drop proximaCarta novoBaralho
-   let novoBaralho = primeiraParte ++ segundaParte
-
-   let cartas = [carta1, carta2, carta3]
+   let cartas = [carta1, carta2]
    let novoBaralhoHumano = baralhoHumano ++ cartas
    putStrLn "Baralho Humano: "
-   putStrLn((show novoBaralhoHumano) ++ " Pontuação: " ++ (show pontuacaoHumano3))
+   putStrLn((show novoBaralhoHumano) ++ " Pontuação: " ++ (show pontuacaoHumano2))
   
 
    
@@ -101,34 +90,21 @@ iniciarPartida = do
    let primeiraParte = take indice2 novoBaralho
    let proximaCarta = indice2 + 1
    let segundaParte = drop proximaCarta novoBaralho
-   let novoBaralho = primeiraParte ++ segundaParte
-
-   --pega terceira carta
-   indice3 <- randomRIO(0 :: Int, 46 :: Int)
-   let carta3 = novoBaralho !! indice3
-   let pontuacaoMaquina3 = pontuacaoMaquina2 + snd (carta3)
+   let novoBaralho = primeiraParte ++ segundaParte   
    
-   --remove a carta do baralho
-   let primeiraParte = take indice3 novoBaralho
-   let proximaCarta = indice3 + 1
-   let segundaParte = drop proximaCarta novoBaralho
-   let novoBaralho = primeiraParte ++ segundaParte
-   
-   
-   let cartas = [carta1, carta2, carta3]
+   let cartas = [carta1, carta2]
    let novoBaralhoMaquina = baralhoMaquina ++ cartas
    
-   
+   putStrLn "Baralho Maquina: "
+   putStrLn((show novoBaralhoMaquina) ++ " Pontuação: " ++ (show pontuacaoMaquina2))
+
    --Escolher se puxa nova carta
    putStrLn("Quer puxar outra carta? 1 - sim | 2 - não")
    escolhaTemp <- getLine
    let escolha = read escolhaTemp :: Int
-   puxarCarta escolha 46 pontuacaoHumano3 pontuacaoMaquina3 novoBaralhoHumano novoBaralhoMaquina baralho
+   puxarCarta escolha 48 pontuacaoHumano2 pontuacaoMaquina2 novoBaralhoHumano novoBaralhoMaquina baralho
    
-	-- comentei o resultado final
-   --putStrLn "Baralho Maquina: "
-   --putStrLn((show novoBaralhoMaquina) ++ " Pontuação: " ++ (show pontuacaoMaquina3))
-   --vencedorPartida pontuacaoHumano3 pontuacaoMaquina3
+   
    
 -- Exibe o vencedor baseado nos pontos feitos pelos jogadores   
 vencedorPartida pontuacaoHumano pontuacaoMaquina = do
