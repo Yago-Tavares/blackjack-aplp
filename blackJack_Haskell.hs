@@ -113,7 +113,13 @@ iniciarPartida = do
    let proximaCarta = indice3 + 1
    let segundaParte = drop proximaCarta novoBaralho
    let novoBaralho = primeiraParte ++ segundaParte
-
+   
+   --Escolher se puxa nova carta
+   putStrLn("Quer puxar outra carta? 1 - sim | 2 - não")
+   escolhaTemp <- getLine
+   let escolha = read escolhaTemp :: Int
+   puxarCarta escolha pontuacaoHumano3 10 novoBaralhoHumano baralho
+   
    let cartas = [carta1, carta2, carta3]
    let novoBaralhoMaquina = baralhoMaquina ++ cartas
    putStrLn "Baralho Maquina: "
@@ -130,3 +136,31 @@ vencedorPartida pontuacaoHumano pontuacaoMaquina = do
 	else if (pontuacaoMaquina > 21 && pontuacaoHumano <= 21) then putStrLn ("Jogador humano é o vencedor: " ++ (show pontuacaoHumano) ++ " pontos" ++ "\nPontuação máquina: " ++ show(pontuacaoMaquina))
 	--Eu acho que aqui podemos reinvocar o inicarPartida e rodar um novo jogo quando der empate de pontos
 	else putStrLn ("Não houve ganhadores, ambos jogadores marcaram acima de 21 pontos! \nPontuação humano: " ++ (show pontuacaoHumano) ++ "\nPontuação máquina: " ++ (show pontuacaoMaquina))
+
+puxarCarta :: Int -> Int -> Int -> [(String, Int)] -> [(String, Int)] -> IO()
+puxarCarta 2 pontuacaoJogador indice baralhoJogador baralho = do
+  --Isso aqui não tá fazendo nada a não ser imprimindo o resultado do baralho do jogador
+  putStrLn(show(baralhoJogador))
+
+puxarCarta escolha pontuacaoJogador indice baralhoJogador baralho = do
+
+  let novaCarta = baralho !! indice
+  let novaPontuacaoJogador = pontuacaoJogador + snd (novaCarta)
+  let novoBaralhoJogador = baralhoJogador ++ [novaCarta]
+  putStrLn "Baralho:  "
+  putStrLn((show novoBaralhoJogador) ++ " Pontuação: " ++ (show novaPontuacaoJogador))
+
+  putStrLn("Quer puxar outra carta? 1 - sim | 2 - não")
+
+--tá faltando remover a carta!
+  escolhaTemp <- getLine
+  let escolha = read escolhaTemp :: Int
+  novoIndice <- randomRIO(0 :: Int, 46 :: Int) -- esse índice aqui tem de atualizar também 
+
+  puxarCarta escolha novaPontuacaoJogador novoIndice novoBaralhoJogador baralho
+
+--Não tem serventia por enquanto
+podeJogar :: Int -> Int
+podeJogar pontuacaoJogador = do
+	if pontuacaoJogador <= 21 then 1
+	else 0
