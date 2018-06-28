@@ -114,17 +114,21 @@ iniciarPartida = do
    let segundaParte = drop proximaCarta novoBaralho
    let novoBaralho = primeiraParte ++ segundaParte
    
+   
+   let cartas = [carta1, carta2, carta3]
+   let novoBaralhoMaquina = baralhoMaquina ++ cartas
+   
+   
    --Escolher se puxa nova carta
    putStrLn("Quer puxar outra carta? 1 - sim | 2 - não")
    escolhaTemp <- getLine
    let escolha = read escolhaTemp :: Int
-   puxarCarta escolha pontuacaoHumano3 10 novoBaralhoHumano baralho
+   puxarCarta escolha 46 pontuacaoHumano3 pontuacaoMaquina3 novoBaralhoHumano novoBaralhoMaquina baralho
    
-   let cartas = [carta1, carta2, carta3]
-   let novoBaralhoMaquina = baralhoMaquina ++ cartas
-   putStrLn "Baralho Maquina: "
-   putStrLn((show novoBaralhoMaquina) ++ " Pontuação: " ++ (show pontuacaoMaquina3))
-   vencedorPartida pontuacaoHumano3 pontuacaoMaquina3
+	-- comentei o resultado final
+   --putStrLn "Baralho Maquina: "
+   --putStrLn((show novoBaralhoMaquina) ++ " Pontuação: " ++ (show pontuacaoMaquina3))
+   --vencedorPartida pontuacaoHumano3 pontuacaoMaquina3
    
 -- Exibe o vencedor baseado nos pontos feitos pelos jogadores   
 vencedorPartida pontuacaoHumano pontuacaoMaquina = do
@@ -137,27 +141,32 @@ vencedorPartida pontuacaoHumano pontuacaoMaquina = do
 	--Eu acho que aqui podemos reinvocar o inicarPartida e rodar um novo jogo quando der empate de pontos
 	else putStrLn ("Não houve ganhadores, ambos jogadores marcaram acima de 21 pontos! \nPontuação humano: " ++ (show pontuacaoHumano) ++ "\nPontuação máquina: " ++ (show pontuacaoMaquina))
 
-puxarCarta :: Int -> Int -> Int -> [(String, Int)] -> [(String, Int)] -> IO()
-puxarCarta 2 pontuacaoJogador indice baralhoJogador baralho = do
+-- Parâmetros: Escolha - TamanhoBaralho - PontuaçãoJogadorHumano - PontuaçãoJogadorMáquina - BaralhoJogadorHumano - BaralhoJogadorMáquina - Baralho
+puxarCarta :: Int -> Int -> Int -> Int -> [(String, Int)] -> [(String, Int)]-> [(String, Int)] -> IO()
+puxarCarta 2 tamanhoBaralho pontuacaoJogadorHumano pontuacaoJogadorMaquina baralhoJogadorHumano baralhoJogadorMaquina baralho = do
   --Isso aqui não tá fazendo nada a não ser imprimindo o resultado do baralho do jogador
-  putStrLn(show(baralhoJogador))
+  vencedorPartida pontuacaoJogadorHumano pontuacaoJogadorMaquina
+  --putStrLn(show(baralhoJogadorHumano) ++ " Pontuação:" ++ (show pontuacaoJogadorHumano))
 
-puxarCarta escolha pontuacaoJogador indice baralhoJogador baralho = do
+puxarCarta escolha tamanhoBaralho pontuacaoJogadorHumano pontuacaoJogadorMaquina baralhoJogadorHumano baralhoJogadorMaquina baralho = do
 
-  let novaCarta = baralho !! indice
-  let novaPontuacaoJogador = pontuacaoJogador + snd (novaCarta)
-  let novoBaralhoJogador = baralhoJogador ++ [novaCarta]
+  novoRandom <- randomRIO(0 :: Int, tamanhoBaralho :: Int)
+  let novaCarta = baralho !! novoRandom
+  let novaPontuacaoJogadorHumano = pontuacaoJogadorHumano + snd (novaCarta)
+  let novoBaralhoJogadorHumano = baralhoJogadorHumano ++ [novaCarta]
   putStrLn "Baralho:  "
-  putStrLn((show novoBaralhoJogador) ++ " Pontuação: " ++ (show novaPontuacaoJogador))
+  putStrLn((show novoBaralhoJogadorHumano) ++ " Pontuação: " ++ (show novaPontuacaoJogadorHumano))
 
   putStrLn("Quer puxar outra carta? 1 - sim | 2 - não")
 
 --tá faltando remover a carta!
   escolhaTemp <- getLine
   let escolha = read escolhaTemp :: Int
-  novoIndice <- randomRIO(0 :: Int, 46 :: Int) -- esse índice aqui tem de atualizar também 
+  
+   -- esse índice aqui tem de atualizar também 
+  let novoTamanhoBaralho = (tamanhoBaralho - 1)
 
-  puxarCarta escolha novaPontuacaoJogador novoIndice novoBaralhoJogador baralho
+  puxarCarta escolha novoTamanhoBaralho novaPontuacaoJogadorHumano pontuacaoJogadorMaquina novoBaralhoJogadorHumano baralhoJogadorMaquina baralho
 
 --Não tem serventia por enquanto
 podeJogar :: Int -> Int
