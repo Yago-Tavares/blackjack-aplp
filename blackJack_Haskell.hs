@@ -41,6 +41,8 @@ iniciarPartida = do
    --pega primeira carta
    indice1 <- randomRIO(0 :: Int, 51 :: Int)
    let carta1 = baralho !! indice1
+   let pontuacaoHumano1 = snd (carta1)
+
    --remove a carta do baralho
    let primeiraParte = take indice1 baralho
    let proximaCarta = indice1 + 1
@@ -50,6 +52,8 @@ iniciarPartida = do
    --pega segunda carta
    indice2 <- randomRIO(0 :: Int, 50 :: Int)
    let carta2 = novoBaralho !! indice2
+   let pontuacaoHumano2 = pontuacaoHumano1 + snd (carta2)
+   
    --remove a carta do baralho
    let primeiraParte = take indice2 novoBaralho
    let proximaCarta = indice2 + 1
@@ -59,6 +63,8 @@ iniciarPartida = do
    --pega terceira carta
    indice3 <- randomRIO(0 :: Int, 49 :: Int)
    let carta3 = novoBaralho !! indice3
+   let pontuacaoHumano3 = pontuacaoHumano2 + snd (carta3)
+
    --remove a carta do baralho
    let primeiraParte = take indice3 novoBaralho
    let proximaCarta = indice3 + 1
@@ -68,14 +74,18 @@ iniciarPartida = do
    let cartas = [carta1, carta2, carta3]
    let novoBaralhoHumano = baralhoHumano ++ cartas
    putStrLn "Baralho Humano: "
-   print novoBaralhoHumano
+   putStrLn((show novoBaralhoHumano) ++ " Pontuação: " ++ (show pontuacaoHumano3))
+  
 
+   
 ------------------------------------------------------
 -- Pega cartas da maquina
 
    --pega primeira carta
    indice1 <- randomRIO(0 :: Int, 48 :: Int)
    let carta1 = novoBaralho !! indice1
+   let pontuacaoMaquina1 = snd (carta1)
+   
    --remove a carta do baralho
    let primeiraParte = take indice1 baralho
    let proximaCarta = indice1 + 1
@@ -85,6 +95,8 @@ iniciarPartida = do
    --pega segunda carta
    indice2 <- randomRIO(0 :: Int, 47 :: Int)
    let carta2 = novoBaralho !! indice2
+   let pontuacaoMaquina2 = pontuacaoMaquina1 + snd (carta2)
+  
    --remove a carta do baralho
    let primeiraParte = take indice2 novoBaralho
    let proximaCarta = indice2 + 1
@@ -94,6 +106,8 @@ iniciarPartida = do
    --pega terceira carta
    indice3 <- randomRIO(0 :: Int, 46 :: Int)
    let carta3 = novoBaralho !! indice3
+   let pontuacaoMaquina3 = pontuacaoMaquina2 + snd (carta3)
+   
    --remove a carta do baralho
    let primeiraParte = take indice3 novoBaralho
    let proximaCarta = indice3 + 1
@@ -103,7 +117,5 @@ iniciarPartida = do
    let cartas = [carta1, carta2, carta3]
    let novoBaralhoMaquina = baralhoMaquina ++ cartas
    putStrLn "Baralho Maquina: "
-   print novoBaralhoMaquina
+   putStrLn((show novoBaralhoMaquina) ++ " Pontuação: " ++ (show pontuacaoMaquina3))
    
-
-
