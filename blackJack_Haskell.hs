@@ -60,21 +60,10 @@ iniciarPartida = do
    let segundaParte = drop proximaCarta novoBaralho
    let novoBaralho = primeiraParte ++ segundaParte
 
-   --pega terceira carta
-   indice3 <- randomRIO(0 :: Int, 49 :: Int)
-   let carta3 = novoBaralho !! indice3
-   let pontuacaoHumano3 = pontuacaoHumano2 + snd (carta3)
-
-   --remove a carta do baralho
-   let primeiraParte = take indice3 novoBaralho
-   let proximaCarta = indice3 + 1
-   let segundaParte = drop proximaCarta novoBaralho
-   let novoBaralho = primeiraParte ++ segundaParte
-
-   let cartas = [carta1, carta2, carta3]
+   let cartas = [carta1, carta2]
    let novoBaralhoHumano = baralhoHumano ++ cartas
    putStrLn "Baralho Humano: "
-   putStrLn((show novoBaralhoHumano) ++ " Pontuação: " ++ (show pontuacaoHumano3))
+   putStrLn((show novoBaralhoHumano) ++ " Pontuação: " ++ (show pontuacaoHumano2))
   
 
    
@@ -87,9 +76,9 @@ iniciarPartida = do
    let pontuacaoMaquina1 = snd (carta1)
    
    --remove a carta do baralho
-   let primeiraParte = take indice1 baralho
+   let primeiraParte = take indice1 novoBaralho
    let proximaCarta = indice1 + 1
-   let segundaParte = drop proximaCarta baralho
+   let segundaParte = drop proximaCarta novoBaralho
    let novoBaralho = primeiraParte ++ segundaParte
    
    --pega segunda carta
@@ -101,34 +90,20 @@ iniciarPartida = do
    let primeiraParte = take indice2 novoBaralho
    let proximaCarta = indice2 + 1
    let segundaParte = drop proximaCarta novoBaralho
-   let novoBaralho = primeiraParte ++ segundaParte
-
-   --pega terceira carta
-   indice3 <- randomRIO(0 :: Int, 46 :: Int)
-   let carta3 = novoBaralho !! indice3
-   let pontuacaoMaquina3 = pontuacaoMaquina2 + snd (carta3)
+   let novoBaralho = primeiraParte ++ segundaParte   
    
-   --remove a carta do baralho
-   let primeiraParte = take indice3 novoBaralho
-   let proximaCarta = indice3 + 1
-   let segundaParte = drop proximaCarta novoBaralho
-   let novoBaralho = primeiraParte ++ segundaParte
-   
-   
-   let cartas = [carta1, carta2, carta3]
+   let cartas = [carta1, carta2]
    let novoBaralhoMaquina = baralhoMaquina ++ cartas
    
-   
+   putStrLn "Baralho Maquina: "
+   putStrLn((show novoBaralhoMaquina) ++ " Pontuação: " ++ (show pontuacaoMaquina2))
+
    --Escolher se puxa nova carta
    putStrLn("Quer puxar outra carta? 1 - sim | 2 - não")
    escolhaTemp <- getLine
    let escolha = read escolhaTemp :: Int
-   puxarCarta escolha 46 pontuacaoHumano3 pontuacaoMaquina3 novoBaralhoHumano novoBaralhoMaquina baralho
+   puxarCarta escolha 48 pontuacaoHumano2 pontuacaoMaquina2 novoBaralhoHumano novoBaralhoMaquina novoBaralho
    
-	-- comentei o resultado final
-   --putStrLn "Baralho Maquina: "
-   --putStrLn((show novoBaralhoMaquina) ++ " Pontuação: " ++ (show pontuacaoMaquina3))
-   --vencedorPartida pontuacaoHumano3 pontuacaoMaquina3
    
 -- Exibe o vencedor baseado nos pontos feitos pelos jogadores   
 vencedorPartida pontuacaoHumano pontuacaoMaquina = do
@@ -151,12 +126,21 @@ puxarCarta 2 tamanhoBaralho pontuacaoJogadorHumano pontuacaoJogadorMaquina baral
 puxarCarta escolha tamanhoBaralho pontuacaoJogadorHumano pontuacaoJogadorMaquina baralhoJogadorHumano baralhoJogadorMaquina baralho = do
 
   novoRandom <- randomRIO(0 :: Int, tamanhoBaralho :: Int)
+  --Pegando nova carta
   let novaCarta = baralho !! novoRandom
   let novaPontuacaoJogadorHumano = pontuacaoJogadorHumano + snd (novaCarta)
   let novoBaralhoJogadorHumano = baralhoJogadorHumano ++ [novaCarta]
-  putStrLn "Baralho:  "
-  putStrLn((show novoBaralhoJogadorHumano) ++ " Pontuação: " ++ (show novaPontuacaoJogadorHumano))
-
+  
+  --Removendo a carta do baralho
+  let primeiraParte = take novoRandom baralho
+  let proximaCarta = novoRandom + 1
+  let segundaParte = drop proximaCarta baralho
+  let novoBaralho = primeiraParte ++ segundaParte
+  
+  putStrLn("Baralho: \n" ++ (show novoBaralhoJogadorHumano) ++ " Pontuação: " ++ (show novaPontuacaoJogadorHumano))
+  
+  print novoBaralho
+  
   putStrLn("Quer puxar outra carta? 1 - sim | 2 - não")
 
 --tá faltando remover a carta!
@@ -166,7 +150,7 @@ puxarCarta escolha tamanhoBaralho pontuacaoJogadorHumano pontuacaoJogadorMaquina
    -- esse índice aqui tem de atualizar também 
   let novoTamanhoBaralho = (tamanhoBaralho - 1)
 
-  puxarCarta escolha novoTamanhoBaralho novaPontuacaoJogadorHumano pontuacaoJogadorMaquina novoBaralhoJogadorHumano baralhoJogadorMaquina baralho
+  puxarCarta escolha novoTamanhoBaralho novaPontuacaoJogadorHumano pontuacaoJogadorMaquina novoBaralhoJogadorHumano baralhoJogadorMaquina novoBaralho
 
 --Não tem serventia por enquanto
 podeJogar :: Int -> Int
